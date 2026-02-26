@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 
 // Request: what comes in | Response: what goes out
 export const registerUser = async (req: Request, res: Response): Promise<void> => {

@@ -1,8 +1,9 @@
-import express, { Application, Request, Response } from 'express';
+import express from "express";
+import type { Application, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import connectDB from './config/db';
-import authRoutes from './routes/authRoutes';
+import connectDB from './config/db.ts';
+import authRoutes from './routes/authRoutes.ts';
 
 dotenv.config();
 connectDB();
@@ -18,7 +19,7 @@ app.use('/api/auth', authRoutes);
 
 // Test Route
 app.get('/', (req: Request, res: Response) => {
-  res.send('API is running with TypeScript!');
+  res.send('Connection to database is successful');
 });
 
 const PORT = process.env.PORT || 5000;
