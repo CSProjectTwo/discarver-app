@@ -3,7 +3,8 @@ import type { Application, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './config/db.ts';
-import authRoutes from './routes/authRoutes.ts';
+
+import carRoutes from "./routes/carRoutes.ts"
 
 dotenv.config();
 connectDB();
@@ -14,8 +15,12 @@ const app: Application = express();
 app.use(express.json());
 app.use(cors());
 
+app.use("/api", carRoutes);
+
 // Routes
-app.use('/api/auth', authRoutes);
+app.get("/api/test", (req: Request, res: Response) => {
+  res.json({ message: "API is working" });
+});
 
 // Test Route
 app.get('/', (req: Request, res: Response) => {
