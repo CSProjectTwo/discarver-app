@@ -9,7 +9,7 @@ const userSchema = new Schema({
 
 // High Standard: This "scrambles" the password automatically before it hits the database
 userSchema.pre('save', async function(next) {
-  if (!this.isModified('password')) return next();
+  if (!this.isModified('password')) {return next();}
   this.password = await bcrypt.hash(this.password, 10);
   next();
 });
