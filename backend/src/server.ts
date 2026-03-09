@@ -12,18 +12,11 @@ connectDB();
 
 const app: Application = express();
 
-// Middlewares
 app.use(express.json());
 app.use(cors());
 
 app.use("/api", carRoutes);
 
-// Routes
-app.get("/api/test", (req: Request, res: Response) => {
-  res.json({ message: "API is working" });
-});
-
-// Test Route
 app.get('/', (req: Request, res: Response) => {
   res.send('Connection to database is successful');
 });
