@@ -3,6 +3,7 @@ import type { Application, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './config/db.ts';
+import apiRouter from './routes/apiRoutes.ts';
 
 
 dotenv.config();
@@ -16,10 +17,7 @@ app.use(cors());
 
 
 // Routes
-app.get("/api/test", (req: Request, res: Response) => {
-  res.json({ message: "API is working" });
-});
-
+app.use('/api', apiRouter);
 // Test Route
 app.get('/', (req: Request, res: Response) => {
   res.send('Connection to database is successful');

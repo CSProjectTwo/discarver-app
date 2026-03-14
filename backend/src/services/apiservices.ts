@@ -5,37 +5,31 @@ dotenv.config();
 
 const BASE_URL = "https://car-api2.p.rapidapi.com";
 
-interface Make {
+export interface Make {
   id: number;
   name: string;
 }
 
-interface MakesResponse {
-  data: Make[];
-}
-
-interface Model {
+export interface Model {
   id: number;
   name: string;
-  make_id: number,
+  make_id: number;
+  make: Make;          // nested — free plan returns this
 }
 
-interface ModelResponse {
-  data: Model[];
+export interface Trim {
+  id: number;
+  make_model_id: number;
+  year: number;
+  name: string;
+  description: string;
+  msrp: number;
+  invoice: number;
+  created: string;
+  modified: string;
 }
 
-interface Trim {
-  id: number,
-  make_model_id: number,
-  year: number,
-  name: string
-}
-
-interface TrimResponse{
-  data: Trim[];
-}
-
-interface Body {
+export interface Body {
   id: number;
   make_model_trim_id: number;
   type: string;
@@ -43,38 +37,44 @@ interface Body {
   seats: number;
 }
 
-interface BodyResponse {
-  data: Body[];
-}
-
-interface Mileage {
+export interface Mileage {
   id: number;
   make_model_trim_id: number;
   fuel_tank_capacity: string;
   combined_mpg: number;
+  epa_city_mpg: number;
+  epa_highway_mpg: number;
+  range_city: number;
+  range_highway: number;
   battery_capacity_electric: string | null;
+  epa_time_to_charge_hr_240v:number | null;
 }
 
-interface MileageResponse {
-  data: Mileage[];
-}
-
-interface Engine {
+export interface Engine {
   id: number;
   make_model_trim_id: number;
   engine_type: string;
   fuel_type: string;
+  cylinders: string;
   size: string;
-  horsepower_hp: number,
-  horsepower_rpm: number,
-  torque_ft_lbs: number,
-  drive_type: string,
-  transmission: string,
+  horsepower_hp:number;
+  horsepower_rpm: number;
+  torque_ft_lbs: number;
+  torque_rpm: number; 
+  valves: number;
+  valve_timing: string;
+  cam_type: string;
+  drive_type: string;
+  transmission: string;
 }
 
-interface EngineResponse {
-  data: Engine[];
-}
+export interface MakesResponse { data: Make[];    }
+export interface ModelResponse { data: Model[];   }
+export interface TrimResponse { data: Trim[];    }
+export interface BodyResponse { data: Body[];    }
+export interface MileageResponse { data: Mileage[]; }
+export interface EngineResponse { data: Engine[];  }
+
 
 
 
@@ -156,7 +156,6 @@ export async function getMileages(): Promise<Mileage[]> {
     throw new Error("Failed to fetch mileages");
   }
 }
-
 
 export async function getEngines(): Promise<Engine[]> {
   try {
