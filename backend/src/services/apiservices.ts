@@ -24,6 +24,17 @@ interface ModelResponse {
   data: Model[];
 }
 
+interface Trim {
+  id: number,
+  make_model_id: number,
+  year: number,
+  name: string
+}
+
+interface TrimResponse{
+  data: Trim[];
+}
+
 interface Body {
   id: number;
   make_model_trim_id: number;
@@ -48,30 +59,17 @@ interface MileageResponse {
   data: Mileage[];
 }
 
-interface ExteriorColor {
-  name: string;
-}
-
-interface ExteriorColorResponse {
-  data: ExteriorColor[];
-}
-
 interface Engine {
   id: number;
   make_model_trim_id: number;
   engine_type: string;
   fuel_type: string;
-  cylinders: string;
   size: string;
-  horsepower_hp: number;
-  horsepower_rpm: number;
-  torque_ft_lbs: number;
-  torque_rpm: number;
-  valves: number;
-  valve_timing: string;
-  cam_type: string;
-  drive_type: string;
-  transmission: string;
+  horsepower_hp: number,
+  horsepower_rpm: number,
+  torque_ft_lbs: number,
+  drive_type: string,
+  transmission: string,
 }
 
 interface EngineResponse {
@@ -159,24 +157,6 @@ export async function getMileages(): Promise<Mileage[]> {
   }
 }
 
-export async function getExteriorColors(): Promise<ExteriorColor[]> {
-  try {
-    const response = await axios.get<ExteriorColorResponse>(
-      `${BASE_URL}/api/exterior-colors`,
-      {
-        headers: {
-          "x-rapidapi-key": process.env.API_KEY,
-          "x-rapidapi-host": process.env.API_HOST,
-        },
-      }
-    );
-
-    return response.data.data;
-  } catch (error: any) {
-    console.error("API Error:", error.response?.data || error.message);
-    throw new Error("Failed to fetch exterior colors");
-  }
-}
 
 export async function getEngines(): Promise<Engine[]> {
   try {
