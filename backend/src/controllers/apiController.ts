@@ -3,7 +3,9 @@ import type { Request, Response } from "express";
 import {
   getMakes,
   getEngines,
-  getModels
+  getModels,
+  getBodies,
+  getMileages
 } from "../services/apiservices.js";
 
 export async function fetchMakes(req: Request, res: Response) {
@@ -43,3 +45,22 @@ export async function fetchModels(req: Request, res: Response) {
     res.status(500).json({ error: "Failed to fetch models" });
   }
 }
+
+export async function fetchBodies(req: Request, res: Response) {
+  try {
+    const bodies = await getBodies();
+    res.json(bodies);
+  } catch {
+    res.status(500).json({ error: "Failed to fetch bodies" });
+  }
+}
+ 
+export async function fetchMileages(req: Request, res: Response) {
+  try {
+    const mileages = await getMileages();
+    res.json(mileages);
+  } catch {
+    res.status(500).json({ error: "Failed to fetch mileages" });
+  }
+}
+ 
