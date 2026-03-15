@@ -1,9 +1,23 @@
 import express from "express";
-import { fetchEngines } from "../controllers/apiController.ts";
+import {
+  fetchMakes,
+  fetchModels,
+  fetchEngines,
+  fetchBodies,
+  fetchMileages,
+} from "../controllers/apiController.js";
 
 const router = express.Router();
 
+
+router.get("/makes/:year", fetchMakes);
+
+router.get("/models/:year/:make", fetchModels);
+
 router.get("/engines", fetchEngines);
 
-export default router;
+router.get("/bodies", fetchBodies);
 
+router.get("/mileages", fetchMileages);
+
+export default router;
