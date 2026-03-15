@@ -5,7 +5,7 @@ import {
   fetchEngines,
   fetchBodies,
   fetchMileages,
-} from "../controllers/apiController.js";
+} from "../controllers/apiController.ts";
 
 const router = express.Router();
 

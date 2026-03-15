@@ -6,7 +6,7 @@ import {
   getModels,
   getBodies,
   getMileages
-} from "../services/apiservices.js";
+} from "../services/apiservices.ts";
 
 export async function fetchMakes(req: Request, res: Response) {
   try {

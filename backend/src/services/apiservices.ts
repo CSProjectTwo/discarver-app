@@ -14,7 +14,7 @@ export interface Model {
   id: number;
   name: string;
   make_id: number;
-  make: Make;          // nested — free plan returns this
+  make: Make;
 }
 
 export interface Trim {
