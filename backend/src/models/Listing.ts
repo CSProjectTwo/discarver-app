@@ -83,7 +83,16 @@ const ListingSchema = new Schema(
     colour:          { type: String },
     location:        { type: String },
     images:          [{ type: String }],
- 
+    seller_details: {
+      name: { type: String, required: true },
+      email: { type: String, value: "abc@gmail.com" },
+      phone: { type: String, value: "+1234567890" },
+      location: { type: String, required: true },
+      distance: { type: Number, required: true }
+    },
+    registration: { type: String, required: true },
+    MOT: { type: String, required: true },
+    
     status: { type: String, enum: ["active", "sold"], default: "active" },
   },
   { timestamps: true }
