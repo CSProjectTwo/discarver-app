@@ -3,6 +3,7 @@ import type { Application, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './config/db.ts';
+import listingRoutes from "./routes/ListingRoutes.ts";
 
 
 dotenv.config();
@@ -20,9 +21,10 @@ app.get("/api/test", (req: Request, res: Response) => {
   res.json({ message: "API is working" });
 });
 
-// Test Route
-app.get('/', (req: Request, res: Response) => {
-  res.send('Connection to database is successful');
+app.use("/api/listings", listingRoutes);
+ 
+app.get("/", (req: Request, res: Response) => {
+  res.send("Discarver API is running");
 });
 
 const PORT = process.env.PORT || 5000;
