@@ -51,6 +51,17 @@ const BodySchema = new Schema (
     { _id: false }
 );
 
+const MileageSchema = new Schema(
+  {
+    api_id:             { type: Number },
+    combined_mpg:       { type: Number },
+    epa_city_mpg:       { type: Number },
+    epa_highway_mpg:    { type: Number },
+    fuel_tank_capacity: { type: String },
+  },
+  { _id: false }
+);
+
 const ListingSchema = new Schema(
     {
     vehicle: {
@@ -59,6 +70,7 @@ const ListingSchema = new Schema(
       trim:    { type: TrimSchema,    required: true },
       engine:  { type: EngineSchema },
       body:    { type: BodySchema },
+      mileage: { type: MileageSchema },
     },
  
     // manually entered fields
