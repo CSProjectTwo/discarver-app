@@ -41,7 +41,15 @@ const EngineSchema = new Schema (
     },
     { _id: false }
 );
-const BodySchema = new Schema ();
+const BodySchema = new Schema (
+    {
+    api_id: { type: Number }, 
+    type: { type: String },
+    doors: { type: Number },
+    seats: { type: Number }
+    },
+    { _id: false }
+);
 
 const ListingSchema = new Schema();
 
