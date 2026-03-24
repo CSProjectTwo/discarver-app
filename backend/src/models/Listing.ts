@@ -51,6 +51,30 @@ const BodySchema = new Schema (
     { _id: false }
 );
 
-const ListingSchema = new Schema();
+const ListingSchema = new Schema(
+    {
+    vehicle: {
+      make:    { type: MakeSchema,    required: true },
+      model:   { type: ModelSchema,   required: true },
+      trim:    { type: TrimSchema,    required: true },
+      engine:  { type: EngineSchema },
+      body:    { type: BodySchema },
+    },
+ 
+    // manually entered fields
+    title:           { type: String,  required: true },
+    description:     { type: String,  required: true },
+    price:           { type: Number,  required: true },
+    odometer_miles:  { type: Number,  required: true },
+    previous_owners: { type: Number,  default: 1 },
+    condition:       { type: String,  enum: ["excellent", "good", "fair", "poor"], required: true },
+    colour:          { type: String },
+    location:        { type: String },
+    images:          [{ type: String }],
+ 
+    status: { type: String, enum: ["active", "sold"], default: "active" },
+  },
+  { timestamps: true }
+);
 
 export const Listing = mongoose.model("Listing", ListingSchema);
