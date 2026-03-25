@@ -2,9 +2,8 @@ import express from "express";
 import type { Application, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import connectDB from './config/db.ts';
-import listingRoutes from "./routes/ListingRoutes.ts";
-
+import connectDB from './config/db';
+import authRoutes from './routes/authRoutes';
 
 dotenv.config();
 connectDB();
@@ -15,16 +14,12 @@ const app: Application = express();
 app.use(express.json());
 app.use(cors());
 
-
 // Routes
-app.get("/api/test", (req: Request, res: Response) => {
-  res.json({ message: "API is working" });
-});
+app.use('/api/auth', authRoutes);
 
-app.use("/api/listings", listingRoutes);
- 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Discarver API is running");
+// Test Route
+app.get('/', (req: Request, res: Response) => {
+  res.send('API is running with TypeScript!');
 });
 
 const PORT = process.env.PORT || 5000;
