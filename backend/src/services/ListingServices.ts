@@ -1,4 +1,4 @@
-import { Listing } from "../models/Listing.js";
+import { Listing } from "../models/Listing.ts";
 
 export async function getAllListings(filters: {
   make?:      string;
