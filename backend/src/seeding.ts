@@ -12,7 +12,7 @@ const API_HEADERS = {
 };
 
 const SEED_YEAR  = 2021;
-const SEED_LIMIT = 100;
+const SEED_LIMIT = 50;
 
 interface ApiMake   { id: number; name: string }
 interface ApiModel  { id: number; name: string; make_id: number }

@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { getMakes, getModels } from "../services/apiService.ts";
+import { getMakes, getModels } from "../services/apiService.js";
 
 export async function fetchMakes(req: Request, res: Response) {
   try {

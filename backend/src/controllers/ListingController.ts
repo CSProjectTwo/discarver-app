@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { getAllListings, getListingById } from "../services/ListingServices.ts";
+import { getAllListings, getListingById } from "../services/ListingServices.js";
 
 export async function getListings(req: Request, res: Response) {
   try {
