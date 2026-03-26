@@ -1,25 +1,24 @@
 import express from "express";
-import type { Application, Request, Response } from 'express';
-import dotenv from 'dotenv';
-import cors from 'cors';
-import connectDB from './config/db';
-import authRoutes from './routes/authRoutes';
+import type { Application, Request, Response } from "express";
+import dotenv from "dotenv";
+import cors from "cors";
+import connectDB from "./config/db.ts";
+import carRoutes from "./routes/carRoutes.ts";
+import listingRoutes from "./routes/ListingRoutes.ts";
 
 dotenv.config();
 connectDB();
 
 const app: Application = express();
 
-// Middlewares
 app.use(express.json());
 app.use(cors());
 
-// Routes
-app.use('/api/auth', authRoutes);
+app.use("/api", carRoutes);
+app.use("/api/listings", listingRoutes);
 
-// Test Route
-app.get('/', (req: Request, res: Response) => {
-  res.send('API is running with TypeScript!');
+app.get("/", (_req: Request, res: Response) => {
+  res.send("Discarver API is running");
 });
 
 const PORT = process.env.PORT || 5000;
