@@ -1,30 +1,98 @@
-import { Listing } from "../models/Listing.js";
+import mongoose, { Schema } from "mongoose";
 
-export async function getAllListings(filters: {
-  make?:      string;
-  model?:     string;
-  year?:      number;
-  min_price?: number;
-  max_price?: number;
-  condition?: string;
-}) {
-  const query: Record<string, unknown> = { status: "active" };
+const MakeSchema = new Schema(
+  {
+    api_id: { type: Number, required: true },
+    name:   { type: String, required: true },
+  },
+  { _id: false }
+);
 
-  if (filters.make)      query["vehicle.make.name"]  = new RegExp(filters.make,  "i");
-  if (filters.model)     query["vehicle.model.name"] = new RegExp(filters.model, "i");
-  if (filters.year)      query["vehicle.trim.year"]  = filters.year;
-  if (filters.condition) query["condition"]           = filters.condition;
+const ModelSchema = new Schema(
+  {
+    api_id:  { type: Number, required: true },
+    name:    { type: String, required: true },
+    make_id: { type: Number, required: true },
+  },
+  { _id: false }
+);
 
-  if (filters.min_price || filters.max_price) {
-    const priceQuery: Record<string, number> = {};
-    if (filters.min_price) priceQuery.$gte = filters.min_price;
-    if (filters.max_price) priceQuery.$lte = filters.max_price;
-    query.price = priceQuery;
-  }
+const TrimSchema = new Schema(
+  {
+    api_id: { type: Number, required: true },
+    name:   { type: String },
+    year:   { type: Number, required: true },
+  },
+  { _id: false }
+);
 
-  return await Listing.find(query).sort({ createdAt: -1 });
-}
+const EngineSchema = new Schema(
+  {
+    api_id:        { type: Number },
+    engine_type:   { type: String },
+    fuel_type:     { type: String },
+    cylinders:     { type: String },
+    size:          { type: String },
+    horsepower_hp: { type: Number },
+    torque_ft_lbs: { type: Number },
+    drive_type:    { type: String },
+    transmission:  { type: String },
+  },
+  { _id: false }
+);
 
-export async function getListingById(id: string) {
-  return await Listing.findById(id);
-}
+const BodySchema = new Schema(
+  {
+    api_id: { type: Number },
+    type:   { type: String },
+    doors:  { type: Number },
+    seats:  { type: Number },
+  },
+  { _id: false }
+);
+
+const MileageSchema = new Schema(
+  {
+    api_id:                    { type: Number },
+    combined_mpg:              { type: Number },
+    epa_city_mpg:              { type: Number },
+    epa_highway_mpg:           { type: Number },
+    fuel_tank_capacity:        { type: String },
+    battery_capacity_electric: { type: String, default: null },
+  },
+  { _id: false }
+);
+
+const ListingSchema = new Schema(
+  {
+    vehicle: {
+      make:    { type: MakeSchema,    required: true },
+      model:   { type: ModelSchema,   required: true },
+      trim:    { type: TrimSchema,    required: true },
+      engine:  { type: EngineSchema },
+      body:    { type: BodySchema },
+      mileage: { type: MileageSchema },
+    },
+    title:           { type: String, required: true },
+    name:            { type: String, required: true },
+    description:     { type: String, required: true },
+    price:           { type: Number, required: true },
+    odometer_miles:  { type: Number, required: true },
+    previous_owners: { type: Number, default: 1 },
+    condition:       { type: String, enum: ["excellent", "good", "fair", "poor"], required: true },
+    colour:          { type: String },
+    seller_details: {
+      name:        { type: String },
+      location:    { type: String },
+      seller_type: { type: String, enum: ["private", "dealer"] },
+    },
+    MOT_expiry:      { type: String },
+    road_tax:        { type: String },
+    emissions_class: { type: String },
+    images:          [{ type: String }],
+    status:          { type: String, enum: ["active", "sold"], default: "active" },
+  },
+  { timestamps: true }
+);
+
+export const Listing = mongoose.model("Listing", ListingSchema);
